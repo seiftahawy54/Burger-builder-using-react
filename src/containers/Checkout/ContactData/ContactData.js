@@ -1,6 +1,8 @@
 // Importing main react library with its things
 import React, { Component } from "react";
 import classes from "./ContactData.module.css";
+// Importing connect HOC to add the component to global state.
+import { connect } from "react-redux";
 
 // Importing button shape
 import Button from "../../../components/UI/Button/Button";
@@ -12,6 +14,8 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 // Object Maker
 import ObjectMaker from "../../../hoc/ObjectMaker/ObjectMaker";
+// Importing action types
+import * as actionTypes from "../../../store/actions";
 
 class ContactData extends Component {
   state = {
@@ -76,6 +80,10 @@ class ContactData extends Component {
 
   checkValidation = (value, rules) => {
     let isValid = true;
+    if (!rules) {
+      return true;
+    }
+
     if (rules.required) {
       isValid = value.trim() !== "" && isValid;
     }
@@ -86,6 +94,16 @@ class ContactData extends Component {
 
     if (rules.maxLength) {
       isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
     }
 
     return isValid;
@@ -103,7 +121,7 @@ class ContactData extends Component {
     }
 
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData,
     };
@@ -140,7 +158,7 @@ class ContactData extends Component {
       formIsValid = updatedOrderForm[inputIDs].isValid && formIsValid;
     }
 
-    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid});
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
 
   render() {
@@ -168,7 +186,9 @@ class ContactData extends Component {
             changed={(event) => this.inputChangedHandler(event, el.id)}
           />
         ))}
-        <Button type="Success" disabled={!this.state.formIsValid}>Order</Button>
+        <Button type="Success" disabled={!this.state.formIsValid}>
+          Order
+        </Button>
       </form>
     );
     if (this.state.loading) {
@@ -184,4 +204,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+  };
+};
+
+export default connect(mapStateToProps)(ContactData);
