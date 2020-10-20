@@ -1,18 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 // Importing react router to make the project routable.
-import { BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router } from "react-router-dom";
 // Importing provider to enable Redux to whole app.
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 // Importing Store functionality to operate it.
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from "redux";
 // Imorting reducer to add wanted functionality.
-import Reducer from './store/reducer';
+import BurgerBuilderRuducer from "./store/reducers/burgerBuilder";
+// Importing redux thunk for allow async code to be executed.
+import thunk from 'redux-thunk';
 
-const store = createStore(Reducer);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  BurgerBuilderRuducer,
+  composeEnhancers(
+    applyMiddleware(thunk)
+  ),
+);
 
 const app = (
   <Provider store={store}>
@@ -22,10 +31,7 @@ const app = (
   </Provider>
 );
 
-ReactDOM.render(
-  app,
-  document.getElementById('root')
-);
+ReactDOM.render(app, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

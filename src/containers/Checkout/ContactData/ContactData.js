@@ -15,7 +15,7 @@ import Input from "../../../components/UI/Input/Input";
 // Object Maker
 import ObjectMaker from "../../../hoc/ObjectMaker/ObjectMaker";
 // Importing action types
-import * as actionTypes from "../../../store/actions";
+import * as actionTypes from "../../../store/actions/actionTypes";
 
 class ContactData extends Component {
   state = {
