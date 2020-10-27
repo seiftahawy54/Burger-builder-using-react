@@ -6,13 +6,16 @@ import React, { Component } from "react";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 
 // Import Route to nest the form to this route.
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 // Importing contact data to view the form
 import ContactData from "./ContactData/ContactData";
 // Importing connect HOC to add the component to global state.
 import { connect } from 'react-redux';
+// Importing actions indexer
+import * as OrderActions from '../../store/actions/index';
 
 class Checkout extends Component {
+
   checkoutCancelHandler = () => {
     this.props.history.goBack();
   };
@@ -22,25 +25,33 @@ class Checkout extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <CheckoutSummary
-          ingredients={this.props.ings}
-          checkoutCancel={this.checkoutCancelHandler}
-          checkoutContinue={this.checkoutContinueHandler}
-        />
-        <Route
-          path={this.props.match.path + "/contact-data"}
-          component={ContactData}
-        />
-      </div>
-    );
+    let summary = <Redirect to="/"/>;
+    if (this.props.ings) {
+      const purchasedRedirect = this.props.purchased ? <Redirect to="" /> : null;
+      summary = (
+        <div>
+          { purchasedRedirect }
+          <CheckoutSummary
+            ingredients={this.props.ings}
+            checkoutCancel={this.checkoutCancelHandler}
+            checkoutContinue={this.checkoutContinueHandler}
+          />
+          <Route
+            path={this.props.match.path + "/contact-data"}
+            component={ContactData}
+          />
+        </div>
+        );
+    }
+
+    return summary;
   }
 }
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients
+    ings: state.burgerBuilder.ingredients,
+    purchased: state.order.purchased
   };
 };
 
