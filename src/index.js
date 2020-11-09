@@ -15,12 +15,15 @@ import thunk from 'redux-thunk';
 import BurgerBuilderRuducer from "./store/reducers/burgerBuilder";
 // Importing orders reducer to add the wanted functionality.
 import OrderBurgerReducer from "./store/reducers/orders";
+// Importing authentication reducer to add the authentication functionality.
+import Auth from './store/reducers/auth';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   burgerBuilder: BurgerBuilderRuducer,
-  order: OrderBurgerReducer
+  order: OrderBurgerReducer,
+  auth: Auth
 });
 
 const store = createStore(

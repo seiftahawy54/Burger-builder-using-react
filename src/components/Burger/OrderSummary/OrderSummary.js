@@ -1,8 +1,8 @@
 // MAIN REACT LIBRARY and component important stuff
 import React, { Component } from "react"
 
-// Importing Aux
-import Aux from "../../../hoc/Aux/Aux";
+// Importing Pux
+import Pux from "../../../hoc/Pux/Pux";
 
 // Importing Button shape
 import Button from '../../UI/Button/Button'
@@ -28,7 +28,7 @@ class OrderSummary extends Component {
     });
     
     return (
-      <Aux>
+      <Pux>
         <h3>Your Order</h3>
         <p>A delicious burger with the following ingredients: </p>
         <ul>
@@ -38,7 +38,7 @@ class OrderSummary extends Component {
         <p>Continue to Checkout?</p>
         <Button type='Danger' clicked={this.props.purchaseCanceled}>CANCEL</Button>
         <Button type='Success' clicked={this.props.purchaseContinued}>CONTINUE</Button>
-      </Aux>
+      </Pux>
     )}
 };
 

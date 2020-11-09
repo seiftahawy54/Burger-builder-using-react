@@ -2,8 +2,8 @@ import React, { Component } from "react";
 // Importing connect HOC to add the component to global state.
 import { connect } from 'react-redux';
 
-/* Aux component */
-import Aux from "../../hoc/Aux/Aux";
+/* Pux component */
+import Pux from "../../hoc/Pux/Pux";
 
 // Burger Ingredient && Burger Component To render
 import Burger from "../../components/Burger/Burger";
@@ -75,7 +75,7 @@ class BurgerBuilder extends Component {
 
     if (this.props.ings) {
       burger = (
-        <Aux>
+        <Pux>
           <Burger ingredients={this.props.ings} />
           <BuilderContorls
             ingredientAdded={this.props.onAddIngredient}
@@ -85,7 +85,7 @@ class BurgerBuilder extends Component {
             isOrdered={this.purchasingHandler}
             purchasable={this.updatePurchaseState(this.props.ings)}
           />
-        </Aux>
+        </Pux>
       );
 
       orderSummary = (
@@ -99,7 +99,7 @@ class BurgerBuilder extends Component {
     }
 
     return (
-      <Aux>
+      <Pux>
         <Modal
           show={this.state.purchasing}
           modalClosed={this.purchaseCancelHandler}
@@ -107,7 +107,7 @@ class BurgerBuilder extends Component {
           {orderSummary}
         </Modal>
         {burger}
-      </Aux>
+      </Pux>
     );
   }
 }

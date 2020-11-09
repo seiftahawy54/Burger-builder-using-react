@@ -8,8 +8,8 @@ import Logo from '../../Logo/Logo'
 import NavItems from '../NavigatiopnItems/NavigationItems'
 // Importing Backdrop
 import Backdrop from '../../UI/Backdrop/Backdrop'
-// Importing Aux Container
-import Aux from '../../../hoc/Aux/Aux'
+// Importing Pux Container
+import Pux from '../../../hoc/Pux/Pux'
 
 const SideDrawer = (props) => {
   let attachedClasses = [classes.SideDrawer, classes.Close]
@@ -19,7 +19,7 @@ const SideDrawer = (props) => {
   }
 
   return (
-    <Aux>
+    <Pux>
       <Backdrop show={props.open} clicked={props.closed}/>
       <div className={attachedClasses.join(' ')}>
         <div className={classes.Logo}>
@@ -29,7 +29,7 @@ const SideDrawer = (props) => {
           <NavItems />
         </nav>
       </div>
-    </Aux>
+    </Pux>
   )
 }
 

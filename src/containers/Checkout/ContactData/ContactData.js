@@ -72,7 +72,7 @@ class ContactData extends Component {
             { value: "cheapest", display: "Cheapest" },
           ],
         },
-        "fastest",
+        "Fastest",
         {},
         false,
         false
@@ -128,7 +128,7 @@ class ContactData extends Component {
       orderData: formData,
     };
 
-    this.props.orderBurgerHandler(order)
+    this.props.orderBurgerHandler(order, this.props.token)
 
     // axios
     //   .post("/orders.json", order)
@@ -212,13 +212,14 @@ const mapStateToProps = (state) => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token
   };
 };
 
 const mpaDispatchToProps = (dispatch) => {
   return {
-    orderBurgerHandler: orderData => dispatch(orderingActions.purchaseBurger(orderData)),
+    orderBurgerHandler: (orderData, token) => dispatch(orderingActions.purchaseBurger(orderData, token)),
   };
 };
 

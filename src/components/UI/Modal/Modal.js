@@ -2,8 +2,8 @@
 import React, { Component } from 'react'
 import classes from './Modal.module.css'
 
-// Importing Aux conatainer
-import Aux from '../../../hoc/Aux/Aux'
+// Importing Pux conatainer
+import Pux from '../../../hoc/Pux/Pux'
 
 // Importing backdrop => To make the backdrop effect
 import Backdrop from '../Backdrop/Backdrop'
@@ -19,7 +19,7 @@ class Modal extends Component {
 
   render = () => {
     return (
-      <Aux>
+      <Pux>
         <Backdrop show={this.props.show} clicked={this.props.modalClosed}/>
         <div
           className={classes.Modal}
@@ -30,7 +30,7 @@ class Modal extends Component {
         >
           {this.props.children}
         </div>
-      </Aux>
+      </Pux>
     )
   }
 }

@@ -2,8 +2,8 @@
 import React, { Component } from 'react'
 import classes from './Layout.module.css'
 
-// Auxillary files.
-import Aux from '../Aux/Aux'
+// Puxillary files.
+import Pux from '../Pux/Pux'
 
 // Importing toolbar component => for rendering the toolbar anywhere.
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
@@ -30,7 +30,7 @@ class Layout extends Component {
 
   render = () => {
     return (
-      <Aux>
+      <Pux>
         <Toolbar
           drawerToggleClicked={this.drawerToggleHandler}
         />
@@ -40,7 +40,7 @@ class Layout extends Component {
         <main className={classes.Content}>
           { this.props.children }
         </main>
-      </Aux>
+      </Pux>
     )
   }
 }

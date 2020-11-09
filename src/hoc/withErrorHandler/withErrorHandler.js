@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 
 // Importing Modal shape
 import Modal from '../../components/UI/Modal/Modal'
-import Aux from '../Aux/Aux'
+import Pux from '../Pux/Pux'
 
 const withErrorHandler = (WrappedComponent, axios) => {
   return class extends Component {
@@ -34,14 +34,14 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
     render = () => {
       return (
-        <Aux>
+        <Pux>
           <Modal 
           modalClosed={this.errorConfirmedHandler}
           show={this.state.error}>
             {this.state.error ? this.state.error.message : null}
           </Modal>
           <WrappedComponent {...this.props}/>
-        </Aux>
+        </Pux>
       )
     }
   }
