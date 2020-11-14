@@ -1,6 +1,8 @@
 // MAIN REACT LIBRARY and component important stuff.
 import React, { Component } from 'react'
 import classes from './Layout.module.css'
+// Importing connect functionality to connect to main redux
+import { connect } from 'react-redux';
 
 // Puxillary files.
 import Pux from '../Pux/Pux'
@@ -32,9 +34,11 @@ class Layout extends Component {
     return (
       <Pux>
         <Toolbar
+          isAuth={this.props.isAuthenticated}
           drawerToggleClicked={this.drawerToggleHandler}
         />
         <SideDrawer
+          isAuth={this.props.isAuthenticated}
           open={this.state.isVisibleSideDrawer}
           closed={this.sideDrawerClosedHandler}/>
         <main className={classes.Content}>
@@ -45,4 +49,11 @@ class Layout extends Component {
   }
 }
 
-export default Layout
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token !== null
+  };
+};
+
+
+export default connect(mapStateToProps)(Layout);
