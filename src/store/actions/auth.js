@@ -78,8 +78,6 @@ export const setAuthRedirectPath = (path) => {
   }
 };
 
-// Some comments
-
 export const authCheckState = () => {
   return dispatch => {
     const token = localStorage.getItem('token');

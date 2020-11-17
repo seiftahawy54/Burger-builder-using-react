@@ -18,7 +18,7 @@ import OrderBurgerReducer from "./store/reducers/orders";
 // Importing authentication reducer to add the authentication functionality.
 import Auth from './store/reducers/auth';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : null;
 
 const rootReducer = combineReducers({
   burgerBuilder: BurgerBuilderRuducer,

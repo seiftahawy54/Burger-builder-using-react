@@ -3,11 +3,18 @@ import ObjectMaker from '../../hoc/ObjectMaker/ObjectMaker';
 import { connect }from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+// Importing button component from UI folder.
 import Button from '../../components/UI/Button/Button';
+// Importing input component from UI folder.
 import Input from '../../components/UI/Input/Input';
+// Importing classes module from css file.
 import classes from './Auth.module.css';
+// Importing actions index file function.
 import * as actions from '../../store/actions/index';
+// Importing spinner ui helper.
 import Spinner from '../../components/UI/Spinner/Spinner';
+// Importing checkvalidation utility function.
+import { checkValidation } from "../../shared/utility";
 
 class Auth extends Component {
   state = {
@@ -38,44 +45,13 @@ class Auth extends Component {
     }
   }
 
-  checkValidation = (value, rules) => {
-    let isValid = true;
-    if (!rules) {
-      return true;
-    }
-
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    return isValid;
-  };
-
   inputChangedHandler = (e, controlName) => {
     const updatedControls = {
       ...this.state.controls,
       [controlName]: {
         ...this.state.controls[controlName],
         value: e.target.value,
-        isValid: this.checkValidation(e.target.value, this.state.controls[controlName].validation),
+        isValid: checkValidation(e.target.value, this.state.controls[controlName].validation),
         touched: true
       }
     }
