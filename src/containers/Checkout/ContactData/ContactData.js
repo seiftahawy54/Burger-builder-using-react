@@ -14,12 +14,12 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 // Object Maker
 import ObjectMaker from "../../../hoc/ObjectMaker/ObjectMaker";
-// Importing action types
-import * as actionTypes from "../../../store/actions/actionTypes";
 // Import WithErrorHandler HOC.
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 // Import index file which holds the reference to all actions
 import * as orderingActions from '../../../store/actions/index';
+// Import Utility function to updating objects.
+import { updatedObject, checkValidation } from '../../../shared/utility';
 
 class ContactData extends Component {
   state = {
@@ -81,37 +81,6 @@ class ContactData extends Component {
     formIsValid: false,
   };
 
-  checkValidation = (value, rules) => {
-    let isValid = true;
-    if (!rules) {
-      return true;
-    }
-
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    return isValid;
-  };
-
   orderHandler = (event) => {
     event.preventDefault();
 
@@ -130,40 +99,27 @@ class ContactData extends Component {
     };
 
     this.props.orderBurgerHandler(order, this.props.token)
-
-    // axios
-    //   .post("/orders.json", order)
-    //   .then((res) => {
-    //     this.setState({ loading: false });
-    //     this.props.history.push("/");
-    //   })
-    //   .catch((err) => {
-    //     this.setState({ loading: false });
-    //   });
   };
 
   inputChangedHandler = (e, inputIdentifier) => {
-    const updatedOrderForm = {
-      ...this.state.orderForm,
-    };
-    const updatedFormElement = {
-      ...updatedOrderForm[inputIdentifier],
-    };
+    const updatedFormElement = updatedObject(this.state.orderForm[inputIdentifier], {
+      value:  e.target.value,
+      isValid: checkValidation(e.target.value, this.state.orderForm[inputIdentifier].validation),
+      touched: true
+    });
 
-    updatedFormElement.value = e.target.value;
-    updatedFormElement.isValid = this.checkValidation(
-      updatedFormElement.value,
-      updatedFormElement.validation
-    );
-    updatedOrderForm[inputIdentifier] = updatedFormElement;
-    updatedFormElement.touched = true;
+    const updatedOrderForm = updatedObject(this.state.orderForm, {
+      [inputIdentifier]: updatedFormElement
+    });
 
     let formIsValid = true;
+    
     for (let inputIDs in updatedOrderForm) {
       formIsValid = updatedOrderForm[inputIDs].isValid && formIsValid;
     }
 
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+
   };
 
   render() {

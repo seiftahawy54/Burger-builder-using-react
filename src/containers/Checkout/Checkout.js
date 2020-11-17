@@ -11,8 +11,6 @@ import { Route, Redirect } from "react-router-dom";
 import ContactData from "./ContactData/ContactData";
 // Importing connect HOC to add the component to global state.
 import { connect } from 'react-redux';
-// Importing actions indexer
-import * as OrderActions from '../../store/actions/index';
 
 class Checkout extends Component {
 
