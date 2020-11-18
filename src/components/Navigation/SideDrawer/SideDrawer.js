@@ -5,7 +5,7 @@ import classes from './SideDrawer.module.css'
 // Importing Logo
 import Logo from '../../Logo/Logo'
 // Importing Navigation items
-import NavItems from '../NavigatiopnItems/NavigationItems'
+import NavItems from '../NavigationItems/NavigationItems'
 // Importing Backdrop
 import Backdrop from '../../UI/Backdrop/Backdrop'
 // Importing Pux Container
