@@ -8,7 +8,7 @@ import Pux from "../../hoc/Pux/Pux";
 // Burger Ingredient && Burger Component To render
 import Burger from "../../components/Burger/Burger";
 // BuildControls import => responsible for controlling the adding and deleting ingredients.
-import BuilderContorls from "../../components/Burger/BuildControls/BuildControls";
+import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 // Modal import => responsible for gathering navbar components in one place.
 import Modal from "../../components/UI/Modal/Modal";
 // Order Summary => Setup the orders amounts and process to checkout
@@ -22,7 +22,7 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 // Importing action types
 import * as actions from '../../store/actions/index';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     purchasing: false,
   };
@@ -82,7 +82,7 @@ class BurgerBuilder extends Component {
       burger = (
         <Pux>
           <Burger ingredients={this.props.ings} />
-          <BuilderContorls
+          <BuildControls
             ingredientAdded={this.props.onAddIngredient}
             ingredientRemoved={this.props.onRemoveIngredient}
             disabled={disabledInfo}

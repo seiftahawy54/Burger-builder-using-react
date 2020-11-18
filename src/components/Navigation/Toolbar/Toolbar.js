@@ -6,7 +6,7 @@ import classes from './Toolbar.module.css'
 import Logo from '../../Logo/Logo'
 
 // Importing navigation items
-import NavigationItems from '../NavigatiopnItems/NavigationItems'
+import NavigationItems from '../NavigationItems/NavigationItems'
 
 // Importing drawerToggle component
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle'
