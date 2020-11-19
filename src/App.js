@@ -37,6 +37,7 @@ class App extends Component {
       <Switch>
         <Route path="/auth" component={asyncAuth} />
         <Route path="/" exact component={BurgerBuilder}/>
+        <Route render={() => <h1 style={{textAlign: "center", color:"red"}}>PAGE NOT FOUND!</h1>}/>
         <Redirect to="/" />
       </Switch>
     );
@@ -49,6 +50,7 @@ class App extends Component {
           <Route path="/logout" component={Logout} />
           <Route path="/auth" component={asyncAuth} />
           <Route path="/" exact component={BurgerBuilder}/>
+          <Route render={() => <h1 style={{textAlign: "center", color:"red"}}>PAGE NOT FOUND!</h1>}/>
           <Redirect to="/" />
         </Switch>
       );
