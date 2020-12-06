@@ -1,60 +1,69 @@
 // MAIN REACT LIBRARY and component important stuff
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 
 // Importing connect function to connect redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 // Importing Order Component for rendering one single order.
 import Order from "../../components/Order/Order";
 // Importing Axios
 import axios from "../../axios-orders";
 // Importing error shape HOC
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 // Import Index file for dispatch events
-import * as actions from '../../store/actions/index';
+import * as actions from "../../store/actions/index";
 // Importing spinner from UI
-import Spinner from '../../components/UI/Spinner/Spinner';
+import Spinner from "../../components/UI/Spinner/Spinner";
 
-class Orders extends Component {
+const Orders = (props) => {
 
-  componentDidMount() {
-    this.props.onFetchOrder(this.props.token, this.props.userId);
-  }
+  const {onFetchOrder, token, userId} = props;
 
-  render() {
-    let orders = <Spinner />;
-    if (!this.props.error) {
-      orders = (
-        this.props.orders.map(order => {
-          return <Order
-            key={order.id}
-            ingredients={order.ingredients}
-            price={order.price}
-          />;
-        })
+  useEffect(() => {
+    onFetchOrder(token, userId);
+  }, [onFetchOrder, token, userId]);
+
+  let orders = <Spinner />;
+  if (!props.error) {
+    orders = props.orders.map((order) => {
+      return (
+        <Order
+          key={order.id}
+          ingredients={order.ingredients}
+          price={order.price}
+        />
       );
-    }
-
-    return (
-      <div>
-        {orders}
-      </div>
-    );
+    });
   }
-}
 
-const mapStateToProps = state => {
+  let checkingOrdersNumber =
+    orders.length === 0 ? <p
+      style={{
+        textAlign: "center",
+        fontFamily: "dancing script",
+        fontSize: '2em'
+      }}
+    >No orders? Start ordering now!</p> : orders;
+
+  return <div>{checkingOrdersNumber}</div>;
+};
+
+const mapStateToProps = (state) => {
   return {
     orders: state.order.orders,
     loading: state.order.loading,
     token: state.auth.token,
-    userId: state.auth.userId
+    userId: state.auth.userId,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchOrder: (token, userId) => dispatch(actions.fetchOrders(token, userId))
+    onFetchOrder: (token, userId) =>
+      dispatch(actions.fetchOrders(token, userId)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(Orders, axios));
